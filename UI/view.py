@@ -27,8 +27,10 @@ class View:
         self._controller = controller
 
     def popola_dropdown_ruolo(self, ruoli):
-        self.dd_ruolo.options = [ft.dropdown.Option(text=r) for r in ruoli]
-        self.dd_ruolo.update()
+        self.dd_ruolo.options.clear()
+        for r in ruoli:
+            self.dd_ruolo.options.append(ft.dropdown.Option(text=str(r['role'])))
+        self.update()
 
     def show_alert(self, message):
         self._alert.show_alert(message)
@@ -37,6 +39,7 @@ class View:
         self._page.update()
 
     def load_interface(self):
+
         self.txt_title = ft.Text("Gestione Artisti", size=30, weight=ft.FontWeight.BOLD)
 
         self.dd_ruolo = ft.Dropdown(label="Seleziona ruolo artista", width=250)
@@ -52,6 +55,7 @@ class View:
         self.list_risultato = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
 
         self.toggle_tema = ft.Switch(label="Tema scuro", value=True, on_change=self._cambia_tema)
+        self._controller.dd_role()
 
         row1 = ft.Row([self.dd_ruolo, self.btn_crea_grafo, self.btn_classifica], alignment=ft.MainAxisAlignment.CENTER)
         row2 = ft.Row([self.dd_iniziale, self.btn_cerca_percorso], alignment=ft.MainAxisAlignment.CENTER)
